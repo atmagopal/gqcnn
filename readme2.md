@@ -16,13 +16,14 @@
     pip3 install rospkg catkin_pkg
     mkdir ~/cvbridge_build_ws/src
     cd ~/cvbridge_build_ws/src
+
     git clone -b melodic https://github.com/ros-perception/vision_opencv.git
     cd ..
     catkin config --init -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
 
         # If gqcnn is downloaded into another workspace, do:
         catkin config --extend <path to workspace with GQCNN ROS package>/devel
-        
+    
     catkin build
 
     # source this package when running gqcnn in virtual environment
@@ -41,15 +42,32 @@
     # Compatible with (older) tensorflow1
     pip install tensorflow-gpu==1.15 
 
+    pip install "rtree>=0.8,<0.9" GPUtil psutil visualization
+    
     cd ~/.virtualenvs/gqcnn/lib/python3.6/site-packages
     git clone https://github.com/BerkeleyAutomation/perception.git
     cd perception
     pip install -e .
     python setup.py test #test installation
 
-    pip install "rtree>=0.8,<0.9" GPUtil psutil 
-    pip install visualization
+## Get gqcnn
+    cd ~/cvbridge_build_ws/src
+    git clone https://github.com/BerkeleyAutomation/autolab_core.git
+    git clone -b v1.2.0 https://github.com/atmagopal/gqcnn.git
     
-    cd <you catkin workspace>/src
+    catkin build -j8
+
+    cd gqcnn
+    ./scripts/downloads/download_example_data.sh
+    ./scripts/downloads/models/download_models.sh
+
+## Launch service
+
+    workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash
+    roslaunch gqcnn grasp_planning_service.launch model_name:=GQCNN-4.0-SUCTION
+
+## Test with saved data
     
-    pip install .
+    workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash
+    cd ~/cvbridge_build_ws/src/gqcnn
+    python examples/policy_ros.py --depth_image data/examples/clutter/phoxi/dex-net_4.0/depth_0.npy --segmask data/examples/clutter/phoxi/dex-net_4.0/segmask_0.png --camera_intr data/calib/phoxi/phoxi.intr
