@@ -52,8 +52,8 @@ from gqcnn.utils import GripperMode
 # Set up logger.
 logger = Logger.get_logger("examples/policy.py")
 
-if __name__ == "__main__":
-    # Parse args.
+def main():
+     # Parse args.
     parser = argparse.ArgumentParser(
         description="Run a grasping policy on an example image")
     parser.add_argument("model_name",
@@ -266,3 +266,6 @@ if __name__ == "__main__":
         vis.title("Planned grasp at depth {0:.3f}m with Q={1:.3f}".format(
             action.grasp.depth, action.q_value))
         vis.show()
+
+if __name__ == "__main__":
+   main()

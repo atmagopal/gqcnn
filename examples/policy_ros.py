@@ -50,8 +50,8 @@ from gqcnn.srv import GQCNNGraspPlanner, GQCNNGraspPlannerSegmask
 # Set up logger.
 logger = Logger.get_logger("examples/policy_ros.py")
 
-if __name__ == "__main__":
-    # Parse args.
+def main():
+     # Parse args.
     parser = argparse.ArgumentParser(
         description="Run a grasping policy on an example image")
     parser.add_argument(
@@ -165,3 +165,7 @@ if __name__ == "__main__":
         vis.grasp(action.grasp, scale=2.5, show_center=False, show_axis=True)
         vis.title("Planned grasp on depth (Q=%.3f)" % (action.q_value))
         vis.show()
+
+
+if __name__ == "__main__":
+   main()

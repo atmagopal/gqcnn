@@ -19,6 +19,27 @@ policy:
     type: suction
 
     # params
+    # max_suction_dir_optical_axis_angle : float
+    #     Maximum angle, in degrees, between the suction approach axis and the
+    #     camera optical axis.
+    # delta_theta : float
+    #     Maximum deviation from zero for the aziumth angle of a rotational
+    #     perturbation to the surface normal (for sample diversity).
+    # delta_phi : float
+    #     Maximum deviation from zero for the elevation angle of a rotational
+    #     perturbation to the surface normal (for sample diversity).
+    # sigma_depth : float
+    #     Standard deviation for a normal distribution over depth values (for
+    #     sample diversity).
+    # min_suction_dist : float
+    #     Minimum admissible distance between suction points (for sample
+    #     diversity).
+    # angle_dist_weight : float
+    #     Amount to weight the angle difference in suction point distance
+    #     computation.
+    # depth_gaussian_sigma : float
+    #     Sigma used for pre-smoothing the depth image for better gradients.
+    
     max_suction_dir_optical_axis_angle: 30
     delta_theta: 5
     delta_phi: 5

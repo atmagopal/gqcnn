@@ -126,9 +126,20 @@ class GraspPlanner(object):
             color_im = ColorImage(self.cv_bridge.imgmsg_to_cv2(
                 raw_color, "rgb8"),
                                   frame=camera_intr.frame)
-            depth_im = DepthImage(self.cv_bridge.imgmsg_to_cv2(
-                raw_depth, desired_encoding="passthrough"),
-                                  frame=camera_intr.frame)
+            
+            depth_data_raw = self.cv_bridge.imgmsg_to_cv2(
+                raw_depth, desired_encoding="passthrough")
+            
+            if depth_data_raw.dtype.type is not np.float32 and \
+                depth_data_raw.dtype.type is not np.float64:
+                rospy.logwarn('Depth array is NOT numpy.float32 NOR numpy.float64! Attempting conversion to float32.')
+                depth_data_raw = depth_data_raw.astype(np.float32)
+                if depth_data_raw.max() > 100:
+                    rospy.logwarn('Depth array data is NOT in meters. Assuming milimeter, converting to meter.')
+                    depth_data_raw = depth_data_raw/1000
+                
+            depth_im = DepthImage(depth_data_raw,
+                                frame=camera_intr.frame)
         except CvBridgeError as cv_bridge_exception:
             rospy.logerr(cv_bridge_exception)
 
