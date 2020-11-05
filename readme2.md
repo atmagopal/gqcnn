@@ -19,7 +19,10 @@
 
     git clone -b melodic https://github.com/ros-perception/vision_opencv.git
     cd ..
-    catkin config --init -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+    
+    catkin config --init -DPYTHON_EXECUTABLE=/usr/bin/python3 \
+        -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m \
+        -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
 
         # If gqcnn is downloaded into another workspace, do:
         catkin config --extend <path to workspace with GQCNN ROS package>/devel
@@ -70,4 +73,5 @@
     
     workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash
     cd ~/cvbridge_build_ws/src/gqcnn
-    python examples/policy_ros.py --depth_image data/examples/clutter/phoxi/dex-net_4.0/depth_0.npy --segmask data/examples/clutter/phoxi/dex-net_4.0/segmask_0.png --camera_intr data/calib/phoxi/phoxi.intr
+    python examples/policy_ros.py --depth_image data/examples/clutter/phoxi/dex-net_4.0/depth_0.npy \
+        --segmask data/examples/clutter/phoxi/dex-net_4.0/segmask_0.png --camera_intr data/calib/phoxi/phoxi.intr
