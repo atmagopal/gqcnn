@@ -53,7 +53,7 @@
 ## Get gqcnn
     cd ~/cvbridge_build_ws/src
     git clone https://github.com/BerkeleyAutomation/autolab_core.git
-    git clone -b v1.2.0 https://github.com/atmagopal/gqcnn.git
+    git clone -b devel_hrg https://github.com/atmagopal/gqcnn.git
     
     catkin build -j8
 
