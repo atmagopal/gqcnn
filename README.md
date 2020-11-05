@@ -19,6 +19,8 @@
 ## Package Overview
 The gqcnn Python package is for training and analysis of Grasp Quality Convolutional Neural Networks (GQ-CNNs). It is part of the ongoing [Dexterity-Network (Dex-Net)](https://berkeleyautomation.github.io/dex-net/) project created and maintained by the [AUTOLAB](https://autolab.berkeley.edu) at UC Berkeley.
 
+## If the abbrev HRG means something to you, look at this [readme](https://github.com/atmagopal/gqcnn/blob/devel_hrg/readme2.md).
+ 
 ## Installation and Usage
 Please see the [docs](https://berkeleyautomation.github.io/gqcnn/) for installation and usage instructions.
 
