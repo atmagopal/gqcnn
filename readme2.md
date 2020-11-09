@@ -5,7 +5,7 @@
     mkdir ~/.virtualenvs
     sudo pip install virtualenvwrapper
     export WORKON_HOME=~/.virtualenvs
-    echo '. /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc
+    echo '. /usr/local/bin/virtualenvwrapper.sh' >> ~/.bash_aliases
     mkvirtualenv --python=python3 gqcnn
 
 ## Dependency: cv_bridge(OpenCV3) with Python3(.6) https://cyaninfinite.com/ros-cv-bridge-with-python-3/
@@ -32,7 +32,7 @@
     # source this package when running gqcnn in virtual environment
 
     # Optional: alias to activate virtual environment and source this workspace in bash
-    echo "alias gqcnn=workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash" > $HOME/.bash_aliases
+    echo 'alias gqcnn=workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash' >> $HOME/.bash_aliases
 
 ## Dependencies in virtual environment
 
