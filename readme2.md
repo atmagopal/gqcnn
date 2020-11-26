@@ -6,7 +6,7 @@
     sudo pip install virtualenvwrapper
     export WORKON_HOME=~/.virtualenvs
     echo '. /usr/local/bin/virtualenvwrapper.sh' >> ~/.bash_aliases
-    mkvirtualenv --python=python3 gqcnn
+    bash && mkvirtualenv --python=python3 gqcnn
 
 ## Dependency: cv_bridge(OpenCV3) with Python3(.6) https://cyaninfinite.com/ros-cv-bridge-with-python-3/
 
