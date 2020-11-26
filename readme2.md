@@ -14,7 +14,7 @@
     # conflict with Python2 default
     bash
     pip3 install rospkg catkin_pkg
-    mkdir ~/cvbridge_build_ws/src
+    mkdir -p ~/cvbridge_build_ws/src
     cd ~/cvbridge_build_ws/src
 
     git clone -b melodic https://github.com/ros-perception/vision_opencv.git
