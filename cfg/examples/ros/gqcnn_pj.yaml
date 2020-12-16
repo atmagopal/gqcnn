@@ -8,3 +8,5 @@ vis:
   depth_image: 0
   segmask: 0
 
+  final_grasp: 1
+

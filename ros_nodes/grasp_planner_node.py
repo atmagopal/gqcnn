@@ -42,7 +42,7 @@ from autolab_core import YamlConfig
 from perception import (CameraIntrinsics, ColorImage, DepthImage, BinaryImage,
                         RgbdImage)
 from visualization import Visualizer2D as vis
-from gqcnn.grasping import (Grasp2D, SuctionPoint2D, RgbdImageState,
+from gqcnn.grasping import (Grasp2D, SuctionPoint2D, GraspAction, RgbdImageState,
                             RobustGraspingPolicy,
                             CrossEntropyRobustGraspingPolicy,
                             FullyConvolutionalGraspingPolicyParallelJaw,
@@ -74,6 +74,8 @@ class GraspPlanner(object):
         self.cv_bridge = cv_bridge
         self.grasping_policy = grasping_policy
         self.grasp_pose_publisher = grasp_pose_publisher
+        self.current_depth_im = []
+
 
         # Set minimum input dimensions.
         policy_type = "cem"
@@ -257,6 +259,8 @@ class GraspPlanner(object):
             vis.imshow(segmask)
             vis.show()
 
+        self.current_depth_im = depth_im
+        
         # Aggregate color and depth images into a single
         # BerkeleyAutomation/perception `RgbdImage`.
         rgbd_im = RgbdImage.from_color_and_depth(color_im, depth_im)
@@ -352,6 +356,23 @@ class GraspPlanner(object):
         gqcnn_grasp.angle = grasp.grasp.angle
         gqcnn_grasp.depth = grasp.grasp.depth
         gqcnn_grasp.thumbnail = grasp.image.rosmsg
+        
+        if self.cfg["vis"]["final_grasp"]:
+            try:
+                thumbnail = DepthImage(cv_bridge.imgmsg_to_cv2(
+                gqcnn_grasp.thumbnail, desired_encoding="passthrough"),
+                                frame=self.current_depth_im._frame)
+            except CvBridgeError:
+                rospy.ROS_ERROR("Failed to convert image")
+
+            action = GraspAction(grasp.grasp, grasp.q_value, thumbnail)
+            #self.current_depth_im._data = self.current_depth_im._data * 1000
+            # Vis final grasp.
+            vis.figure(size=(10, 10))
+            vis.imshow(self.current_depth_im)
+            vis.grasp(action.grasp, scale=2.5, show_center=False, show_axis=True)
+            vis.title("Planned grasp on depth (Q=%.3f)" % (action.q_value))
+            vis.show()
 
         # Create and publish the pose alone for easy visualization of grasp
         # pose in Rviz.
