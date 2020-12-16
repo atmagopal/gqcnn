@@ -6,7 +6,7 @@
     sudo pip install virtualenvwrapper
     export WORKON_HOME=~/.virtualenvs
     echo '. /usr/local/bin/virtualenvwrapper.sh' >> ~/.bash_aliases
-    mkvirtualenv --python=python3 gqcnn
+    bash && mkvirtualenv --python=python3 gqcnn
 
 ## Dependency: cv_bridge(OpenCV3) with Python3(.6) https://cyaninfinite.com/ros-cv-bridge-with-python-3/
 
@@ -14,7 +14,7 @@
     # conflict with Python2 default
     bash
     pip3 install rospkg catkin_pkg
-    mkdir ~/cvbridge_build_ws/src
+    mkdir -p ~/cvbridge_build_ws/src
     cd ~/cvbridge_build_ws/src
 
     git clone -b melodic https://github.com/ros-perception/vision_opencv.git
@@ -32,10 +32,10 @@
     # source this package when running gqcnn in virtual environment
 
     # Optional: alias to activate virtual environment and source this workspace in bash
-    echo 'alias gqcnn=workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash' >> $HOME/.bash_aliases
+    echo "alias gqcnn='workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash'" >> $HOME/.bash_aliases
 
 ## Dependencies in virtual environment
-
+    # New terminal
     bash
     workon gqcnn 
     
@@ -65,12 +65,12 @@
     ./scripts/downloads/models/download_models.sh
 
 ## Launch service
-
+    # New terminal
     workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash
     roslaunch gqcnn grasp_planning_service.launch model_name:=GQCNN-4.0-SUCTION
 
-## Test with saved data
-    
+### Test with saved data
+    # New terminal
     workon gqcnn && source $HOME/cvbridge_build_ws/devel/setup.bash
     cd ~/cvbridge_build_ws/src/gqcnn
     python examples/policy_ros.py --depth_image data/examples/clutter/phoxi/dex-net_4.0/depth_0.npy \
