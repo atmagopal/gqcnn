@@ -29,6 +29,7 @@ Author
 Jeff Mahler
 """
 from abc import ABC, abstractmethod
+from autolab_core import RigidTransform
 
 import numpy as np
 
@@ -83,7 +84,11 @@ class DiscreteApproachGraspConstraintFn(GraspConstraintFn):
         self._max_approach_angle = self._config["max_approach_angle"]
         self._angular_tolerance = self._config["angular_tolerance"]
         self._angular_step = self._config["angular_step"]
-        self._T_camera_world = self._config["camera_pose"]
+        self._reference_frame = self._config["reference_frame"]
+        self._camera_frame = self._config["camera_frame"]
+
+        # self._T_camera_world = self._config["camera_pose"]
+        self._T_camera_reference = RigidTransform.rigid_transform_from_ros(self._camera_frame, self._reference_frame)
 
     def satisfies_constraints(self, grasp):
         """Evaluates whether or not a grasp is valid by evaluating the
@@ -100,7 +105,8 @@ class DiscreteApproachGraspConstraintFn(GraspConstraintFn):
             True if the grasp satisfies constraints, False otherwise.
         """
         # Find grasp angle in world coordinates.
-        axis_world = self._T_camera_world.rotation.dot(grasp.approach_axis)
+        # Vector dot product is the cosine of the angle betwen them
+        axis_world = self._T_camera_reference.rotation.dot(grasp.approach_axis)
         angle = np.arccos(-axis_world[2])
 
         # Check closest available angle.

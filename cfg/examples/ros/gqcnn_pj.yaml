@@ -10,3 +10,19 @@ vis:
 
   final_grasp: 1
 
+# We define the approach direction filter params here
+# Using the filter requires the rigid_transform_listener in autolab_core pkg to run 
+# constraints:
+#   enable_filter: 1
+#   max_approach_angle: 0.785398 # 45 degrees 
+#   angular_tolerance: 0.1
+#   angular_step: 0.01
+#   reference_frame: The grasp's direction is compared with the Z unit vector of this frame
+#   camera_frame: The grasp frame
+constraints:
+  enable_filter: 1
+  max_approach_angle: 0.785398 # 45 degrees 
+  angular_tolerance: 0.1
+  angular_step: 0.01
+  reference_frame: pose_workspace_table_frame
+  camera_frame: camera_color_optical_frame
